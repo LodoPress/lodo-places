@@ -1,0 +1,26 @@
+{
+  "name": "LodoPress/lodo-places",
+  "description": "Syncs data from the google places API",
+  "type": "wordpress-plugin",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "LodoPress"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "LodoPlaces\\": "src/"
+    },
+    "classmap": [
+      "src/"
+    ]
+  },
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "5.6"
+  }
+}
