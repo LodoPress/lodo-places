@@ -29,8 +29,23 @@ class Sync {
 	// GET GOOGLE PLACES API RESULTS //
 
 	public function feed_markup() {
-		echo '<h1>Add Places from Google</h1>'; 
-		$request = wp_remote_get( 'https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJux94CcN4bIcRcH7lFkSAUfo&key=AIzaSyDvo1ivHfHM2yrtInb2NrqcAKiRcsZhUkg' );
+
+		if ( defined( 'LODO_PLACES_API_KEY' ) ) {
+			$key = LODO_PLACES_API_KEY;
+		} else {
+			$key = '';
+		}
+
+		$url = add_query_arg( [
+			'location' => '-33.8670522,151.1957362',
+			'radius' => '24000',
+			'type' => 'restaurant',
+			'key' => $key,
+		], 'https://maps.googleapis.com/maps/api/place/nearbysearch/json' );
+
+		echo '<h1>Add Places from Google</h1>';
+
+		$request = wp_remote_get( $url );
 
 		if( is_wp_error( $request ) ) {
 			return false; // Bail early
@@ -38,12 +53,13 @@ class Sync {
 
 		$body = wp_remote_retrieve_body( $request );
 
-		$data = json_decode( $body );
+		$data = json_decode( $body, true );
 
-		echo '<pre>';
-		print_r( $data );
-		echo '</pre>';
+		foreach($data['results'] as $element) {
+			echo '<img src="' . $element['icon'] . '">';
+    	echo '<h3>' . $element['name'] . '</h3>';
+
+		}
 	}
-
 }
 
