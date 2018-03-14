@@ -32,13 +32,13 @@ class Sync {
 		echo '<h1>Add Places from Google</h1>'; 
 		$request = wp_remote_get( 'https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJux94CcN4bIcRcH7lFkSAUfo&key=AIzaSyDvo1ivHfHM2yrtInb2NrqcAKiRcsZhUkg' );
 
-if( is_wp_error( $request ) ) {
-	return false; // Bail early
-}
+		if( is_wp_error( $request ) ) {
+			return false; // Bail early
+		}
 
-$body = wp_remote_retrieve_body( $request );
+		$body = wp_remote_retrieve_body( $request );
 
-$data = json_decode( $body );
+		$data = json_decode( $body );
 
 		echo '<pre>';
 		print_r( $data );
