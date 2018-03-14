@@ -5,7 +5,3 @@ node_modules/
 *.sql
 *.tar.gz
 *.zip
-
-vendor/**
-!vendor/composer/**
-!vendor/autoload.php
