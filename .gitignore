@@ -7,5 +7,5 @@ node_modules/
 *.zip
 
 vendor/**
-!vendor/composer
+!vendor/composer/**
 !vendor/autoload.php
