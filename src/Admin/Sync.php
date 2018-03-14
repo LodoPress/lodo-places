@@ -29,7 +29,7 @@ class Sync {
 	// GET GOOGLE PLACES API RESULTS //
 
 	public function feed_markup() {
-		echo '<h2>Add Places from Google</h2>'; 
+		echo '<h1>Add Places from Google</h1>'; 
 		$request = wp_remote_get( 'https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJux94CcN4bIcRcH7lFkSAUfo&key=AIzaSyDvo1ivHfHM2yrtInb2NrqcAKiRcsZhUkg' );
 
 if( is_wp_error( $request ) ) {
