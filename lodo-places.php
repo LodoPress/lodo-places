@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:     Lodo Places
- * Description:     Integration with the Google Places API
- * Author:          LodoPress, Ryan Kanner
+ * Plugin Name:     LodoPlaces
+ * Description:     Google Places API Integration
+ * Author:          LodoPress, Ryan Kanner, Taylor Hansen
  * Text Domain:     lodo-places
  * Domain Path:     /languages
  * Version:         0.1.0
@@ -50,7 +50,7 @@ if ( ! class_exists( 'LodoPlaces' ) ) {
 			 * this plugin should instantiate themselves on this hook to make sure the framework
 			 * is available before they do anything.
 			 *
-			 * @param object $instance Instance of the current WPPostSync class
+			 * @param object $instance Instance of the current LodoPlaces class
 			 */
 			do_action( 'lodo_places_init', self::$instance );
 
@@ -68,7 +68,7 @@ if ( ! class_exists( 'LodoPlaces' ) ) {
 
 			// Plugin version.
 			if ( ! defined( 'LODO_PLACES_VERSION' ) ) {
-				define( 'LODO_PLACES_VERSION', '0.2.0' );
+				define( 'LODO_PLACES_VERSION', '0.1.0' );
 			}
 
 			// Plugin Folder Path.
@@ -100,7 +100,7 @@ if ( ! class_exists( 'LodoPlaces' ) ) {
 			if ( file_exists( LODO_PLACES_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 				require_once( LODO_PLACES_PLUGIN_DIR . 'vendor/autoload.php' );
 			} else {
-				throw new Exception( __( 'The autoloader could not be found, send help!', 'wp-post-sync' ) );
+				throw new Exception( __( 'The autoloader could not be found, send help!', 'lodo-places' ) );
 			}
 
 		}
@@ -123,9 +123,9 @@ if ( ! class_exists( 'LodoPlaces' ) ) {
 }
 
 /**
- * Function to instantiate the WP Post Sync plugin
+ * Function to instantiate the LodoPlaces plugin
  *
- * @return object|LodoPlaces Instance of the WPPostSync object
+ * @return object|LodoPlaces Instance of the LodoPlaces object
  * @access public
  */
 function lodo_places_init() {
