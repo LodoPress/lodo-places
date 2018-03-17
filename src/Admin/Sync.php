@@ -7,6 +7,7 @@ class Sync {
 
 	public function setup() {
 		add_action( 'admin_menu', [ $this, 'sync_feed' ] );
+		add_action( 'lodo_places_search_fields', [ $this, 'search_fields' ] );
 	}
 
 	public function sync_feed() {
@@ -36,10 +37,17 @@ class Sync {
 			$key = '';
 		}
 
+		$location = ( ! empty( $_GET['latlong'] ) ) ? sanitize_text_field( $_GET['latlong'] ) : '39.742043,-104.991531';
+		$radius = ( ! empty( $_GET['radius'] ) ) ? sanitize_text_field( $_GET['radius'] ) : '2400';
+		$type = ( ! empty( $_GET['type'] ) ) ? sanitize_text_field( $_GET['type'] ) : '';
+		$keyword = ( ! empty( $_GET['keyword'] ) ) ? sanitize_text_field( $_GET['keyword'] ) : '';
+
 		$url = add_query_arg( [
-			'location' => '-33.8670522,151.1957362',
-			'radius' => '24000',
-			'type' => 'restaurant',
+			'location' => $location,
+			'radius' => $radius,
+			'type' => $type,
+			'keyword' => $keyword,
+			//'pagetoken' => 'CqQCGwEAANMUOM3GrezyNU2rEs8Hja_Id_e3AQ4GSt7f0cdb9uVNvkJQrF1snLtjSl6uUMfnNl59tShdegT4vp0qp4Fr1Emkngn-dwPyEuwvFZ8Lts4vidGDi9bOFDYJGldMnOkbe-F9tpIF_4DswkqJd1qeDvZ1vLGccY30G5uKHFgUkf0EEUQ_mGExP5PjpUy9_vsEQj-qrBpEK5YgqUr0lkOqEVC4lGNjEzlSqNwma3vGN4pabp1yfk6DP0JLh5CzncE9UqCH9tPGAFOjHpgmtgQH28o_GMhO-3pw0zBE57FF0Gxx0qklu0mhrByc8av_s5Y49U3XMrfJk5QWaMOrXRUp2vEIM6aC-VvK9VyCAhJocm0g43vAh_jsBqi1HWN1ilmFNRIQLoJoFtq-sXfDDFqL8yAOqRoUBC4Q5RddQy8NDo1eUQICK62G6nY',
 			'key' => $key,
 		], 'https://maps.googleapis.com/maps/api/place/nearbysearch/json' );
 
@@ -48,18 +56,61 @@ class Sync {
 		$request = wp_remote_get( $url );
 
 		if( is_wp_error( $request ) ) {
-			return false; // Bail early
+			return; // Bail early
 		}
 
 		$body = wp_remote_retrieve_body( $request );
 
 		$data = json_decode( $body, true );
 
+//		echo '<pre>';
+//		print_r( $data );
+//		echo '</pre>';
+
+		$next_page = $data['next_page_token'];
+
+		do_action( 'lodo_places_search_fields' );
+
 		foreach($data['results'] as $element) {
-			echo '<img src="' . $element['icon'] . '">';
-    	echo '<h3>' . $element['name'] . '</h3>';
+
+			echo '<div class="lodo-places-listing">';
+				echo '<img src="' . esc_url( $element['icon'] ) . '">';
+    			echo '<h3>' . esc_html( $element['name'] ) . '</h3>';
+    			echo '<p>' . esc_html( $element['vicinity'] ) . '</p>';
+    			echo '<div class="listing-data">';
+
+    				if ( ! empty( $element['price_level'] ) ) {
+    					echo '<div class="price-level">';
+    					echo '<p>' . esc_html( $element['price_level'] ) . '</p>';
+    					echo '</div>';
+					}
+
+					if ( ! empty( $element['rating'] ) ) {
+    					echo '<div class="rating">';
+						echo '<p>' . esc_html( $element['rating'] ) . '</p>';
+    					echo '</div>';
+					}
+
+					echo '<a class="button button-primary button-large">Import</a>';
+
+    			echo '</div>';
+			echo '</div>';
 
 		}
+	}
+
+	public function search_fields() {
+
+		echo '<div class="lodo-places-listing-filters">';
+			echo '<form method="get">';
+				echo '<input type="text" name="latlong" placeholder="Latitude/Longitude">';
+				echo '<input type="text" name="radius" placeholder="Radius">';
+				echo '<input type="text" name="type" placeholder="type">';
+				echo '<input type="text" name="keyword" placeholder="keyword">';
+				echo '<input type="hidden" name="page" value="sync-places">';
+				echo '<input type="submit" class="button button-primary button-large" value="filter">';
+			echo '</form>';
+		echo '</div>';
 	}
 }
 
