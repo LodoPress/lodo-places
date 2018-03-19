@@ -1,0 +1,15 @@
+{
+  "dist": {
+    "options": {
+      "sourceMap": true
+    },
+    "files": {
+      "static/js/site-denverpost.min.js": [
+        "static/js/site-denverpost.js"
+      ],
+      "static/js/widgets/snowwidget.min.js" : [
+        "static/js/widgets/snowwidget.js"
+      ]
+    }
+  }
+}

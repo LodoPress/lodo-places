@@ -1,0 +1,10 @@
+{
+  "dist": {
+    "src": ["client/js/*.js"],
+    "dest": "static/js/site-denverpost.js"
+  },
+  "snowwidget": {
+    "src": ["client/js/widgets/snowwidget.js"],
+    "dest": "static/js/widgets/snowwidget.js"
+  }
+}
