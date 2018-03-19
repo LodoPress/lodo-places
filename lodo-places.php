@@ -116,6 +116,9 @@ if ( ! class_exists( 'LodoPlaces' ) ) {
 			$admin_sync = new \LodoPlaces\Admin\Sync();
 			$admin_sync->setup();
 
+			$admin_register = new \LodoPlaces\Admin\Register();
+			$admin_register->setup();
+
 		}
 
 	}
