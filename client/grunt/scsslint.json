@@ -6,6 +6,6 @@
     "bundleExec": false,
     "colorizeOutput": true,
     "config": "client/.scss-lint.yml",
-    "reporterOutput": null
+    "reporterOutput": ""
   }
 }

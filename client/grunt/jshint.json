@@ -1,6 +1,7 @@
 {
   "options": {
-    "jshintrc": "client/.jshintrc"
+    "jshintrc": "client/.jshintrc",
+    "reporterOutput": ""
   },
   "all": [
     "Gruntfile.js",
