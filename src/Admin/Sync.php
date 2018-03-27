@@ -59,9 +59,9 @@ class Sync {
 //		print_r( $data );
 //		echo '</pre>';
 
-		echo '<pre>';
-		print_r( get_option( '_test_place_id' ) );
-		echo '</pre>';
+//		echo '<pre>';
+//		print_r( get_option( '_test_place_id' ) );
+//		echo '</pre>';
 
 		$next_page = $data['next_page_token'];
 
